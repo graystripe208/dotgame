@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>dot game</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style type="text/css">
+    .cats {
+      background-color: blue;
+      height: 100px;
+      width: 100px;
+      position: absolute;
+      top: 300px;
+      left: 510px;
+      border-radius: 50px;
+      text-align: center;
+    }
+
+    .cats>div {
+      color: white;
+      padding: 25px 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    function move(e) {
+      var topI = document.getElementById('top');
+      var leftI = document.getElementById('left');
+      var cat = document.getElementById('pew');
+
+      cat.style.left = leftI.value + "px";
+      cat.style.top = topI.value + "px";
+      e.preventDefault();
+    }
+  </script>
+</head>
+
+<body>
+  <div id="pew" class="cats">
+    <div>cats are awesome</div>
+  </div>
+
+  <div class="container">
+    <form onsubmit="move(event)">
+      <div class="form-group">
+        <label for="top">top</label>
+        <input type="number" id="top" name="top" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="left">left</label>
+        <input type="number" id="left" name="left" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">go go go</button>
+    </form>
+  </div>
+</body>
+
+</html>
