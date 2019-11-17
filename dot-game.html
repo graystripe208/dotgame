@@ -56,7 +56,7 @@
   <script type="text/javascript">
     // Helper to check for when the page is ready to rock
     const domReady = (callback) => {
-      if (document.readyState !== "loading") {
+      if (document.readyState === "complete") {
         callback();
       } else {
         document.addEventListener("DOMContentLoaded", callback)
@@ -67,15 +67,53 @@
     domReady(() => {
       // Attach out click handlers for movement controls
       const coin = document.querySelector("#coin");
+      
       document.querySelector(".controls>.up").addEventListener("click", (e) => {
-        const currentPosition = getPosition(coin);
-        coin.style.position = "absolute";
-        coin.style.top = (currentPosition.y - 10) + "px";
-        coin.style.left = currentPosition.x + "px";
+        moveCoin(coin, 0, -10);
       });
+
+      document.querySelector(".controls>.right").addEventListener("click", (e) => {
+        moveCoin(coin, 10, 0);
+      });
+
+      document.querySelector(".controls>.down").addEventListener("click", (e) => {
+        moveCoin(coin, 0, 10);
+      });
+
+      document.querySelector(".controls>.left").addEventListener("click", (e) => {
+        moveCoin(coin, -10, 0);
+      });
+
+      // Listen for resize
+      if(window.addEventListener) {
+        window.addEventListener("resize", () => { centerCoin(coin); });
+      }
+
+      centerCoin(coin);
     });
 
-    function getPosition(el) {
+    function centerCoin(el) {
+      const x = Math.max( document.body.scrollWidth, document.body.offsetWidth, document.body.parentNode.scrollWidth, document.body.parentNode.offsetWidth);
+      const y = Math.max( document.body.scrollHeight, document.body.offsetHeight, document.body.parentNode.scrollHeight, document.body.parentNode.offsetHeight);
+      const controlsNav = document.querySelector(".navbar");
+
+      el.style.position = 'absolute';
+      el.style.left = "" + ((x/2) - (el.offsetWidth / 2)) + "px";
+      el.style.top = "" + (((y/2) - (el.offsetHeight / 2)) - controlsNav.offsetHeight) + "px";
+    }
+
+    function moveCoin(el, x, y) {
+      if(x) {
+        el.style.left = (parseInt(coin.style.left, 10) + x) + "px";
+      }
+      
+      if(y) {
+        el.style.top = (parseInt(coin.style.top, 10) + y) + "px";
+      }
+      
+    }
+
+    function findCurrentPosition(el) {
       let xPos = 0;
       let yPos = 0;
 
